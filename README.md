@@ -47,11 +47,11 @@ rm -f setup.sh && apt update && apt upgrade -y && update-grub && sleep 2 && apt-
 ## Update Script TrojanGo + Shadowsocks
 ### 1. TrojanGo
 ```bash
-   wget -O /usr/bin/addtrgo https://raw.githubusercontent.com/satriaajiputra/Mantap/main/trojango/addtrgo.sh && chmod +x /usr/bin/addtrgo
+wget -O /usr/bin/addtrgo https://raw.githubusercontent.com/satriaajiputra/Mantap/main/trojango/addtrgo.sh && chmod +x /usr/bin/addtrgo
 ```
 ### 2. Shadowsocks
 ```bash
-   wget -O /usr/bin/addss https://raw.githubusercontent.com/satriaajiputra/Mantap/main/shadowsocks/addss.sh && chmod +x /usr/bin/addss
+wget -O /usr/bin/addss https://raw.githubusercontent.com/satriaajiputra/Mantap/main/shadowsocks/addss.sh && chmod +x /usr/bin/addss
 ```
 ### Fitur Script
 

@@ -44,6 +44,15 @@ Part 3: Install Semua Layanan VPN /Install All VPN Service
 rm -f setup.sh && apt update && apt upgrade -y && update-grub && sleep 2 && apt-get update -y && apt-get upgrade && sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sysctl -w net.ipv6.conf.default.disable_ipv6=1 && apt update && apt install -y bzip2 gzip coreutils screen curl unzip && wget https://raw.githubusercontent.com/fisabiliyusri/Mantap/main/setup.sh && chmod +x setup.sh && sed -i -e 's/\r$//' setup.sh && screen -S setup ./setup.sh
 ```
 
+## Update Script TrojanGo + Shadowsocks
+### 1. TrojanGo
+```bash
+   wget -O /usr/bin/addtrgo https://raw.githubusercontent.com/satriaajiputra/Mantap/main/trojango/addtrgo.sh && chmod +x /usr/bin/addtrgo
+```
+### 2. Shadowsocks
+```bash
+   wget -O /usr/bin/addss https://raw.githubusercontent.com/satriaajiputra/Mantap/main/shadowsocks/addss.sh && chmod +x /usr/bin/addss
+```
 ### Fitur Script
 
 • CEK SEMUA IP DAN PORT (Service ALL VPN)

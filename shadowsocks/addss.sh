@@ -14,7 +14,7 @@ LIGHT='\033[0;37m'
 # Getting
 MYIP=$(wget -qO- ipinfo.io/ip);
 echo "Checking VPS"
-IZIN=$( curl ipinfo.io/ip | grep $MYIP )
+#IZIN=$( curl ipinfo.io/ip | grep $MYIP )
 if [ $MYIP = $MYIP ]; then
 echo -e "${NC}${GREEN}Permission Accepted...${NC}"
 else
@@ -45,21 +45,22 @@ fi
 echo ""
 echo "Masukkan Password"
 
-until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
-		read -rp "Password : " -e user
-		CLIENT_EXISTS=$(grep -w $user /etc/shadowsocks-libev/akun.conf | wc -l)
+until [[ $user =~ ^[a-zA-Z0-9_-]+$ && ${CLIENT_EXISTS} == '0' ]]; do
+                read -rp "Password : " -e user
+                CLIENT_EXISTS=$(grep -w $user /etc/shadowsocks-libev/akun.conf | wc -l)
 
-		if [[ ${CLIENT_EXISTS} == '1' ]]; then
-			echo ""
-			echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
-			exit 1
-		fi
-	done
+                if [[ ${CLIENT_EXISTS} == '1' ]]; then
+                        echo ""
+                        echo -e "Username ${RED}${user}${NC} Already On VPS Please Choose Another"
+                        exit 1
+                fi
+        done
 read -p "Expired (Days) : " masaaktif
+read -p "SNI : " sni
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 cat > /etc/shadowsocks-libev/$user-tls.json<<END
-{   
+{
     "server":"0.0.0.0",
     "server_port":$tls,
     "password":"$user",
@@ -97,8 +98,8 @@ systemctl enable shadowsocks-libev-server@$user-http.service
 systemctl start shadowsocks-libev-server@$user-http.service
 tmp1=$(echo -n "aes-256-cfb:${user}@${MYIP}:$tls" | base64 -w0)
 tmp2=$(echo -n "aes-256-cfb:${user}@${MYIP}:$http" | base64 -w0)
-linkss1="ss://${tmp1}?plugin=obfs-local;obfs=tls;obfs-host=bing.com"
-linkss2="ss://${tmp2}?plugin=obfs-local;obfs=http;obfs-host=bing.com"
+linkss1="ss://${tmp1}?plugin=obfs-local;obfs=tls;obfs-host=$sni"
+linkss2="ss://${tmp2}?plugin=obfs-local;obfs=http;obfs-host=$sni"
 echo -e "### $user $exp
 port_tls $tls
 port_http $http">>"/etc/shadowsocks-libev/akun.conf"
